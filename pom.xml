@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>brokenpom</artifactId>
+    <groupId>brokenpom</groupId>
+    <version>0.1.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Akka Dependencies Broken Pom</name>
+    <description>
+        A POM to hopefully reproduce a dependency bug
+    </description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <repositories>
+            <repository>
+                <id>typesafe</id>
+                <name>Typesafe Repository</name>
+                <url>http://repo.typesafe.com/typesafe/releases</url>
+            </repository>
+            <repository>
+                <id>sonatype</id>
+                <name>Sonatype</name>
+                <url>https://oss.sonatype.org/content/groups/scala-tools/</url>
+            </repository>
+        </repositories>
+    
+        <dependencies>
+                <dependency>
+                    <groupId>org.scala-lang</groupId>
+                    <artifactId>scala-library</artifactId>
+                    <version>2.9.1-1-RC1</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.typesafe.akka</groupId>
+                    <artifactId>akka-actor</artifactId>
+                    <version>2.0-RC3</version>
+                </dependency>
+                <dependency>
+                    <groupId>com.typesafe</groupId>
+                    <artifactId>play-mini_2.9.1</artifactId>
+                    <version>2.0-RC3</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>org.scala-lang</groupId>
+                            <artifactId>scala-library</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>    
+        
+                <build>
+
+                    <sourceDirectory>src/main/scala</sourceDirectory>
+                    <testSourceDirectory>src/test/scala</testSourceDirectory>
+
+                    <plugins>
+                        <plugin>
+                            <groupId>org.scala-tools</groupId>
+                            <artifactId>maven-scala-plugin</artifactId>
+                            <version>2.15.2</version>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>compile</goal>
+                                        <goal>testCompile</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <scalaVersion>2.9.1</scalaVersion>
+                                <launchers>
+                                    <launcher>
+                                        <id>akka</id>
+                                        <mainClass>brokenpom.App</mainClass>
+                                        <jvmArgs>
+                                            <jvmArg>-Xmx512m</jvmArg>
+                                        </jvmArgs>
+                                    </launcher>
+                                    <launcher>
+                                        <id>rest</id>
+                                        <mainClass>play.core.server.NettyServer</mainClass>
+                                        <jvmArgs>
+                                            <jvmArg>-Xmx512m</jvmArg>
+                                        </jvmArgs>
+                                    </launcher>
+                                </launchers>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </build>
+        
+</project>
