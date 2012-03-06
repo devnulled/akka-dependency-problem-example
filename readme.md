@@ -1,0 +1,1 @@
+To reproduce the missing runtime dependency problem, clone this project, do a build (mvn clean install), then run the run_server.sh script
